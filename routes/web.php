@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Estudiantes\EstudiantesController;
 use App\Http\Controllers\Notas\NotasController;
+use App\Http\Controllers\WelcomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,35 +32,21 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    // Página principal post-login (usa Inertia + Vue)
-    Route::get('/welcome', function () {
-        return Inertia::render('Welcome');
-    })->name('welcome');
+    // Página principal post-login (usa el controlador WelcomeController)
+    Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
-// 🔹 Grupo de rutas para estudiantes
-Route::prefix('estudiantes')->name('estudiantes.')->group(function () {
+    // 🔹 Grupo de rutas para estudiantes
+    Route::prefix('estudiantes')->name('estudiantes.')->group(function () {
+        Route::get('/', [EstudiantesController::class, 'index'])->name('index');
+        Route::get('/create', [EstudiantesController::class, 'create'])->name('create');
+        Route::post('/', [EstudiantesController::class, 'store'])->name('store');
+        Route::get('/edit/{id}', [EstudiantesController::class, 'edit'])->name('edit');
+        Route::put('/{estudiante}', [EstudiantesController::class, 'update'])->name('update');
+        Route::get('/delete/{id}', [EstudiantesController::class, 'delete'])->name('delete');
+        Route::delete('/{estudiante}', [EstudiantesController::class, 'destroy'])->name('destroy');
+    });
 
-    // Listado principal
-    Route::get('/', [EstudiantesController::class, 'index'])->name('index');
-
-    // Crear formulario
-    Route::get('/create', [EstudiantesController::class, 'create'])->name('create');
-
-    // Guardar nuevo estudiante (POST a /estudiantes)
-    Route::post('/', [EstudiantesController::class, 'store'])->name('store');
-
-    // Editar formulario
-    Route::get('/edit/{id}', [EstudiantesController::class, 'edit'])->name('edit');
-
-    // Actualizar estudiante (PUT a /estudiantes/{estudiante})
-    Route::put('/{estudiante}', [EstudiantesController::class, 'update'])->name('update');
-
-    // Eliminar estudiante (DELETE a /estudiantes/{estudiante})
-    Route::get('/delete/{id}', [EstudiantesController::class, 'delete'])->name('delete');
-    Route::delete('/{estudiante}', [EstudiantesController::class, 'destroy'])->name('destroy');
-});
-
-    // Notas
+    // 🔹 Notas
     Route::get('/notas/index', [NotasController::class, 'index'])->name('notas.index');
     Route::get('/notas/simulacion', [NotasController::class, 'simulacion'])->name('notas.simulacion');
     Route::post('/notas/simulacion', [NotasController::class, 'calcularSimulacion'])->name('notas.simulacion.calcular');

@@ -2,6 +2,10 @@
 import { Head, router } from '@inertiajs/vue3'
 import { ref } from 'vue'
 
+const props = defineProps({
+  activeUsers: Array
+})
+
 const processing = ref(false)
 const showToast = ref(false)
 
@@ -12,7 +16,6 @@ const logout = () => {
   router.post('/logout', {}, {
     onSuccess: () => {
       showToast.value = true
-      // Espera 2 segundos, oculta el toast y redirige al login
       setTimeout(() => {
         showToast.value = false
         window.location.href = '/login'
@@ -28,10 +31,9 @@ const logout = () => {
 <template>
   <Head title="Bienvenido" />
 
-  <!-- Fondo animado -->
   <div class="min-h-screen flex flex-col font-sans text-white bg-[length:400%_400%] animate-[gradientShift_12s_ease_infinite] bg-[linear-gradient(-45deg,#0f172a,#1e1b4b,#3b0764,#450a0a)]">
 
-    <!-- Toast superior centrado -->
+    <!-- Toast -->
     <transition name="fade">
       <div
         v-if="showToast"
@@ -41,27 +43,18 @@ const logout = () => {
       </div>
     </transition>
 
-    <!-- Barra superior -->
+    <!-- Header -->
     <header class="flex items-center justify-between px-8 py-4 bg-white/10 backdrop-blur-lg border-b border-white/20 shadow-md">
-      <!-- Logo -->
       <div class="flex items-center gap-3">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" class="w-10 h-10 text-yellow-300 drop-shadow-lg">
           <circle cx="32" cy="32" r="30" fill="currentColor" opacity="0.15" />
-          <path
-            d="M16 36l8 8 24-24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="4"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
+          <path d="M16 36l8 8 24-24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
         </svg>
         <h1 class="text-2xl font-extrabold tracking-wide">
           <span class="text-yellow-300">Gestor</span> de Notas
         </h1>
       </div>
 
-      <!-- Botón cerrar sesión -->
       <button
         @click="logout"
         :disabled="processing"
@@ -78,21 +71,50 @@ const logout = () => {
       </button>
     </header>
 
-    <!-- Contenido principal -->
+    <!-- Main -->
     <main class="flex-grow flex flex-col justify-center items-center px-6 py-10">
-      <div class="text-center bg-white/10 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/20 w-[90%] md:w-[500px] animate-fadeIn">
+      <div class="text-center bg-white/10 backdrop-blur-xl p-10 rounded-3xl shadow-2xl border border-white/20 w-[90%] md:w-[600px] animate-fadeIn">
         <h2 class="text-4xl font-extrabold mb-6 drop-shadow-md">
           🌙 ¡Bienvenido de nuevo!
         </h2>
 
         <div class="flex flex-col gap-6 mt-4">
-          <!-- Enlace estudiantes -->
           <a
             href="/estudiantes"
             class="bg-gradient-to-r from-violet-600 to-indigo-500 hover:from-indigo-500 hover:to-violet-600 text-white font-semibold py-4 rounded-xl shadow-md hover:shadow-violet-400/40 transition-all transform hover:-translate-y-1 hover-glow flex items-center justify-center gap-3 text-lg"
           >
             🎓 <span>Estudiantes</span>
           </a>
+        </div>
+
+        <!-- Lista de últimos 10 usuarios -->
+        <div class="mt-10 bg-white/10 rounded-2xl p-6 shadow-lg border border-white/10">
+          <h3 class="text-xl font-bold mb-4 text-yellow-300">👥 Últimos usuarios registrados</h3>
+
+          <table v-if="activeUsers && activeUsers.length" class="w-full text-sm text-left border-collapse">
+            <thead class="border-b border-white/20 text-yellow-200 uppercase text-xs">
+              <tr>
+                <th class="py-2 px-3">#</th>
+                <th class="py-2 px-3">Nombre</th>
+                <th class="py-2 px-3">Correo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(user, index) in activeUsers"
+                :key="user.id"
+                class="border-b border-white/10 hover:bg-white/10 transition"
+              >
+                <td class="py-2 px-3 text-gray-300">{{ index + 1 }}</td>
+                <td class="py-2 px-3">{{ user.name }}</td>
+                <td class="py-2 px-3 text-gray-400">{{ user.email }}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <p v-else class="text-white/60 italic">
+            No hay usuarios registrados todavía.
+          </p>
         </div>
 
         <p class="text-sm text-white/60 mt-10">
@@ -107,26 +129,14 @@ const logout = () => {
 
 <style>
 @keyframes gradientShift {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .animate-fadeIn {
