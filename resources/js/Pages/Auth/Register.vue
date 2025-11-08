@@ -2,37 +2,35 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
+  name: '',
+  email: '',
+  password: '',
+  password_confirmation: '',
 });
 
 const submit = () => {
-    form.post(route('register'), {
-        onFinish: () => {
-            form.reset('password', 'password_confirmation');
-        },
-    });
+  form.post(route('register'), {
+    onFinish: () => form.reset('password', 'password_confirmation'),
+  });
 };
 </script>
 
 <template>
-  <Head title="Register" />
+  <Head title="Registro" />
 
   <main class="container">
-    <!-- Lado izquierdo: información de la app -->
+    <!-- Lado izquierdo -->
     <section class="brand-card">
       <div class="logo">
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0" stop-color="#8b5cf6"/>
-              <stop offset="1" stop-color="#0ea5e9"/>
+              <stop offset="0" stop-color="#2563eb" />
+              <stop offset="1" stop-color="#10b981" />
             </linearGradient>
           </defs>
           <rect width="100" height="100" rx="18" fill="url(#g)" />
-          <circle cx="50" cy="50" r="18" fill="#0f172a" opacity="0.9" />
+          <circle cx="50" cy="50" r="18" fill="#ffffff" opacity="0.9" />
         </svg>
 
         <div>
@@ -42,15 +40,15 @@ const submit = () => {
       </div>
 
       <p class="hero">
-        Crea tu cuenta para acceder al sistema de gestión académica 🌌
+        Crea tu cuenta para acceder al sistema de gestión académica 📘
       </p>
 
       <p class="foot-note">
-        © {{ new Date().getFullYear() }} Gestor de Notas — Seguridad primero.
+        © {{ new Date().getFullYear() }} Gestor de Notas — Aprender con estilo.
       </p>
     </section>
 
-    <!-- Lado derecho: formulario de registro -->
+    <!-- Formulario -->
     <section class="form-card">
       <h1>Registro</h1>
 
@@ -99,7 +97,7 @@ const submit = () => {
         </div>
 
         <div class="mt-4">
-          <label for="password_confirmation">Confirmar Contraseña</label>
+          <label for="password_confirmation">Confirmar contraseña</label>
           <input
             id="password_confirmation"
             type="password"
@@ -114,14 +112,14 @@ const submit = () => {
           </div>
         </div>
 
-        <div class="mt-4 flex items-center justify-end">
-          <Link href="/login" class="underline text-gray-400 hover:text-white text-sm">
+        <div class="mt-6 flex items-center justify-between">
+          <Link href="/login" class="link">
             ¿Ya tienes cuenta?
           </Link>
 
           <button
             type="submit"
-            class="btn ms-4"
+            class="btn"
             :disabled="form.processing"
           >
             {{ form.processing ? 'Registrando...' : 'Registrar' }}
@@ -133,31 +131,24 @@ const submit = () => {
 </template>
 
 <style>
-/* Copiado y adaptado de Login.vue para mantener coherencia */
 :root {
-  --bg: #0a0a0f;
-  --card: rgba(255, 255, 255, 0.07);
-  --accent: #8b5cf6;
-  --accent2: #0ea5e9;
-  --muted: #a1a1aa;
-  --white: #f8fafc;
+  --primary: #003366;  /* Azul SENATI institucional */
+  --secondary: #2563eb; /* Azul moderno */
+  --accent: #f97316;   /* Naranja energético */
+  --neutral: #e5e7eb;
+  --text: #1e293b;
+  --card-bg: rgba(255, 255, 255, 0.15);
   --radius: 14px;
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
   font-family: 'Inter', system-ui, sans-serif;
 }
 
-html, body {
-  height: 100%;
-  width: 100%;
-  margin: 0;
-  padding: 0;
-}
-
 body {
-  background: linear-gradient(-45deg, #0f172a, #1e1b4b, #3b0764, #450a0a);
+  margin: 0;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
   background-size: 400% 400%;
-  animation: gradientShift 12s ease infinite;
-  color: var(--white);
+  animation: gradientShift 16s ease infinite;
+  color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -172,24 +163,21 @@ body {
 
 .container {
   width: 100%;
-  max-width: 980px;
+  max-width: 960px;
   display: grid;
   grid-template-columns: 420px 1fr;
   gap: 32px;
   align-items: center;
   backdrop-filter: blur(18px);
-  min-height: 100vh;
-  margin: auto;
+  padding: 20px;
 }
 
 .brand-card {
-  background: var(--card);
+  background: var(--card-bg);
   border-radius: var(--radius);
   padding: 40px;
   box-shadow: var(--shadow);
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
+  color: #fff;
 }
 .logo {
   display: flex;
@@ -199,74 +187,97 @@ body {
 .brand-title {
   font-size: 22px;
   font-weight: 700;
-  color: var(--accent);
+  color: #fff;
 }
 .brand-sub {
-  color: var(--muted);
+  color: #dbeafe;
   font-size: 14px;
 }
-.hero { font-size: 15px; color: #d1d5db; }
-.foot-note { font-size: 12px; color: #9ca3af; margin-top: auto; }
+.hero { font-size: 15px; color: #f1f5f9; }
+.foot-note { font-size: 12px; color: #cbd5e1; margin-top: auto; }
 
 .form-card {
-  background: var(--card);
+  background: #ffffffcc;
   border-radius: var(--radius);
   padding: 36px;
   box-shadow: var(--shadow);
   min-width: 380px;
 }
-h1 { margin-bottom: 10px; font-size: 24px; font-weight: 700; color: #e0e7ff; }
+h1 {
+  margin-bottom: 20px;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
 
-label { display: block; font-size: 14px; color: var(--muted); margin-bottom: 6px; }
+label {
+  display: block;
+  font-size: 14px;
+  color: #374151;
+  margin-bottom: 6px;
+}
 .input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: #fff;
+  border: 1px solid #cbd5e1;
   padding: 12px 14px;
   border-radius: 10px;
-  color: var(--white);
   font-size: 15px;
+  color: #1e293b;
   transition: all 0.25s ease;
 }
 .input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+  border-color: var(--secondary);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
   outline: none;
 }
 
 .btn {
-  width: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  color: #0f172a;
-  font-weight: 700;
-  padding: 12px 14px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #fff;
+  font-weight: 600;
+  padding: 12px 20px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
-  font-size: 16px;
-  margin-top: 10px;
+  transition: all 0.25s ease;
 }
 .btn:hover {
+  background: var(--accent);
   transform: scale(1.03);
-  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.4);
 }
 .btn:disabled {
-  opacity: 0.6;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
+.link {
+  color: var(--secondary);
+  text-decoration: underline;
+  font-size: 14px;
+}
+.link:hover {
+  color: var(--accent);
+}
+
 .error {
-  color: #fb7185;
+  color: #dc2626;
   font-size: 13px;
   margin-top: 6px;
 }
 
 @media (max-width: 880px) {
-  .container {
-    grid-template-columns: 1fr;
-    padding: 10px;
-  }
+  .container { grid-template-columns: 1fr; }
   .brand-card { order: 2; text-align: center; }
   .form-card { order: 1; min-width: unset; }
 }
 </style>
+
+
+
+
+

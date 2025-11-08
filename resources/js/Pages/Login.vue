@@ -109,14 +109,15 @@ function submit() {
 <style>
 /* Aquí mantenemos todo tu CSS tal cual, incluyendo estilos de fondo, contenedores, inputs, botones, etc. */
 :root {
-  --bg: #0a0a0f;
-  --card: rgba(255, 255, 255, 0.07);
-  --accent: #8b5cf6;
-  --accent2: #0ea5e9;
-  --muted: #a1a1aa;
-  --white: #f8fafc;
+  --primary: #003366;   /* Azul SENATI institucional */
+  --secondary: #2563eb; /* Azul moderno y brillante */
+  --accent: #f97316;    /* Naranja enérgico para hover */
+  --neutral: #e5e7eb;
+  --text: #1e293b;
+  --white: #ffffff;
+  --card: rgba(255, 255, 255, 0.15);
   --radius: 14px;
-  --shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   font-family: 'Inter', system-ui, sans-serif;
 }
 
@@ -128,9 +129,9 @@ html, body {
 }
 
 body {
-  background: linear-gradient(-45deg, #0f172a, #1e1b4b, #3b0764, #450a0a);
+  background: linear-gradient(-45deg, var(--primary), var(--secondary), #1e3a8a, #1e40af);
   background-size: 400% 400%;
-  animation: gradientShift 12s ease infinite;
+  animation: gradientShift 14s ease infinite;
   color: var(--white);
   display: flex;
   align-items: center;
@@ -169,7 +170,7 @@ body {
 }
 .brand-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
 }
 
 .logo {
@@ -181,31 +182,32 @@ body {
   width: 56px;
   height: 56px;
 }
-
 .brand-title {
   font-size: 22px;
   font-weight: 700;
-  color: var(--accent);
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 .brand-sub {
-  color: var(--muted);
+  color: #dbeafe;
   font-size: 14px;
 }
 
 .hero {
   font-size: 15px;
   line-height: 1.6;
-  color: #d1d5db;
+  color: #e2e8f0;
 }
 
 .foot-note {
   font-size: 12px;
-  color: #9ca3af;
+  color: #cbd5e1;
   margin-top: auto;
 }
 
 .form-card {
-  background: var(--card);
+  background: #ffffffee;
   border-radius: var(--radius);
   padding: 36px;
   box-shadow: var(--shadow);
@@ -214,36 +216,39 @@ body {
 }
 .form-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
 }
 
 h1 {
-  margin: 0 0 10px;
-  font-size: 24px;
+  margin: 0 0 14px;
+  font-size: 26px;
   font-weight: 700;
-  color: #e0e7ff;
+  color: var(--primary);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
 }
 
 label {
   display: block;
   font-size: 14px;
-  color: var(--muted);
+  color: #475569;
   margin-bottom: 6px;
 }
 
 .input {
   width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
   padding: 12px 14px;
   border-radius: 10px;
-  color: var(--white);
+  color: #1e293b;
   font-size: 15px;
   transition: all 0.25s ease;
 }
 .input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 12px rgba(139, 92, 246, 0.4);
+  border-color: var(--secondary);
+  box-shadow: 0 0 10px rgba(37, 99, 235, 0.4);
   outline: none;
 }
 
@@ -251,27 +256,29 @@ label {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 8px;
+  margin-top: 10px;
   font-size: 14px;
-  color: var(--muted);
+  color: #475569;
 }
 
 .btn {
   width: 100%;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  color: #0f172a;
-  font-weight: 700;
-  padding: 12px 14px;
+  background: linear-gradient(90deg, var(--primary), var(--secondary));
+  color: #ffffff;
+  font-weight: 600;
+  padding: 12px 16px;
   border-radius: 10px;
   border: none;
   cursor: pointer;
   font-size: 16px;
-  transition: all 0.2s ease;
-  margin-top: 10px;
+  transition: all 0.25s ease;
+  margin-top: 16px;
 }
 .btn:hover {
+  background: var(--accent);
+  color: #fff;
   transform: scale(1.03);
-  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.4);
+  box-shadow: 0 6px 18px rgba(249, 115, 22, 0.4);
 }
 .btn:disabled {
   opacity: 0.6;
@@ -279,7 +286,7 @@ label {
 }
 
 .error {
-  color: #fb7185;
+  color: #dc2626;
   font-size: 13px;
   margin-top: 6px;
 }
@@ -303,4 +310,6 @@ label {
     min-width: unset;
   }
 }
+
 </style>
+

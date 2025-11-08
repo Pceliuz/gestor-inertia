@@ -31,7 +31,8 @@ const logout = () => {
 <template>
   <Head title="Bienvenido" />
 
-  <div class="min-h-screen flex flex-col font-sans text-white bg-[length:400%_400%] animate-[gradientShift_12s_ease_infinite] bg-[linear-gradient(-45deg,#0f172a,#1e1b4b,#3b0764,#450a0a)]">
+  <!-- Fondo animado -->
+  <div id="app-background" class="min-h-screen flex flex-col font-sans text-white">
 
     <!-- Toast -->
     <transition name="fade">
@@ -81,7 +82,7 @@ const logout = () => {
         <div class="flex flex-col gap-6 mt-4">
           <a
             href="/estudiantes"
-            class="bg-gradient-to-r from-violet-600 to-indigo-500 hover:from-indigo-500 hover:to-violet-600 text-white font-semibold py-4 rounded-xl shadow-md hover:shadow-violet-400/40 transition-all transform hover:-translate-y-1 hover-glow flex items-center justify-center gap-3 text-lg"
+            class="bg-gradient-to-r from-blue-700 to-indigo-600 hover:from-indigo-600 hover:to-blue-700 text-white font-semibold py-4 rounded-xl shadow-md hover:shadow-blue-400/40 transition-all transform hover:-translate-y-1 hover-glow flex items-center justify-center gap-3 text-lg"
           >
             🎓 <span>Estudiantes</span>
           </a>
@@ -118,8 +119,7 @@ const logout = () => {
         </div>
 
         <p class="text-sm text-white/60 mt-10">
-          © {{ new Date().getFullYear() }} —
-          <span class="text-violet-400 font-medium">Gestor de Notas</span><br />
+          © {{ new Date().getFullYear() }} — <span class="text-violet-400 font-medium">Gestor de Notas</span><br />
           Todos los derechos reservados.
         </p>
       </div>
@@ -128,6 +128,14 @@ const logout = () => {
 </template>
 
 <style>
+/* Fondo animado tipo SENATI */
+#app-background {
+  background: linear-gradient(-45deg, #2563eb, #3b82fa, #1e40af, #77aac7ad);
+  background-size: 400% 400%;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Animaciones */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
@@ -143,11 +151,13 @@ const logout = () => {
   animation: fadeIn 0.8s ease-out;
 }
 
+/* Glow hover */
 .hover-glow:hover {
   box-shadow: 0 0 20px rgba(139, 92, 246, 0.4);
   transform: translateY(-2px);
 }
 
+/* Toast fade */
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.5s;
