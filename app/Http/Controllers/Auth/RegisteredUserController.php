@@ -37,10 +37,11 @@ public function store(Request $request): RedirectResponse
     ]);
 
     $user = User::create([
-        'name' => $request->name,
-        'email' => $request->email,
-        'password' => Hash::make($request->password),
-    ]);
+    'name' => $request->name,
+    'email' => $request->email,
+    'password' => Hash::make($request->password),
+    'role' => str_ends_with($request->email, '@senati.pe') ? 'profesor' : 'estudiante',
+]);
 
     event(new Registered($user));
 

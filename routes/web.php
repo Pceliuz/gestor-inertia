@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Estudiantes\EstudiantesController;
 use App\Http\Controllers\Notas\NotasController;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\ProfesorController;
+use App\Http\Controllers\EstudianteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +21,12 @@ use App\Http\Controllers\WelcomeController;
 
 Route::get('/', function () {
     if (auth()->check()) {
-        return redirect()->route('welcome');
+        $user = auth()->user();
+        if ($user->role === 'profesor') {
+            return redirect()->route('dashboard.profesor');
+        } else {
+            return redirect()->route('dashboard.estudiante');
+        }
     }
     return redirect()->route('login');
 });
@@ -33,7 +40,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // Página principal post-login (usa el controlador WelcomeController)
-    Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
+    //Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
     // 🔹 Grupo de rutas para estudiantes
     Route::prefix('estudiantes')->name('estudiantes.')->group(function () {
@@ -67,5 +74,15 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 | Carga del sistema de autenticación predeterminado
 |--------------------------------------------------------------------------
 */
+
+// Rutas protegidas por autenticación
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/dashboard-profesor', [ProfesorController::class, 'index'])
+        ->name('dashboard.profesor');
+
+    Route::get('/dashboard-estudiante', [EstudianteController::class, 'index'])
+        ->name('dashboard.estudiante');
+});
+
 
 require __DIR__ . '/auth.php';

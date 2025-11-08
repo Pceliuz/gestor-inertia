@@ -14,7 +14,12 @@ class LoginController extends Controller
     public function showLoginForm()
     {
         if (Auth::check()) {
-            return redirect('/welcome');
+            $user = Auth::user();
+            if ($user->role === 'profesor') {
+                return redirect()->route('dashboard.profesor');
+            } else {
+                return redirect()->route('dashboard.estudiante');
+            }
         }
 
         return view('auth.login');
@@ -31,13 +36,21 @@ class LoginController extends Controller
             'password' => ['required', 'string'],
         ]);
 
-        // iniciar sesión
+        // Intentar iniciar sesión
         if (Auth::attempt($credentials, $request->boolean('remember'))) {
             $request->session()->regenerate();
-            return redirect()->intended('/welcome');
+
+            $user = Auth::user();
+
+            // 🔹 Redirección por rol
+            if ($user->role === 'profesor') {
+                return redirect()->route('dashboard.profesor');
+            } else {
+                return redirect()->route('dashboard.estudiante');
+            }
         }
 
-        // Si falla, muestra mensaje de error
+        // Si falla, mostrar mensaje de error
         return back()->withErrors([
             'email' => 'Las credenciales no son correctas.',
         ])->onlyInput('email');

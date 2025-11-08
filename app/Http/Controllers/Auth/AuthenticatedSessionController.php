@@ -31,10 +31,17 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
         $request->session()->regenerate();
-    
-        // Redirige a la página de usuarios autenticados
-        return redirect()->intended('/welcome');
+
+        $user = Auth::user();
+
+        if ($user->role === 'profesor') {
+            return redirect()->route('dashboard.profesor');
+        }
+
+        return redirect()->route('dashboard.estudiante');
     }
+
+
 
     /**
      * Destroy an authenticated session.

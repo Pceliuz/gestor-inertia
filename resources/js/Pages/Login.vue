@@ -10,7 +10,7 @@ const form = useForm({
 function submit() {
   form.post('/login', {
     onSuccess: () => {
-      window.location.href = '/welcome' // redirige al welcome después del login
+      //window.location.href = '/welcome' // redirige al welcome después del login
     }
   })
 }
