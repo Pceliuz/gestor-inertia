@@ -10,7 +10,7 @@ const form = useForm({
 function submit() {
   form.post('/login', {
     onSuccess: () => {
-      //window.location.href = '/welcome' // redirige al welcome después del login
+      //window.location.href = '/welcome'  redirige al welcome después del login
     }
   })
 }
@@ -26,8 +26,8 @@ function submit() {
         <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
-              <stop offset="0" stop-color="#8b5cf6"/>
-              <stop offset="1" stop-color="#0ea5e9"/>
+              <stop offset="0" stop-color="#1d4ed8" />
+              <stop offset="1" stop-color="#0f172a" />
             </linearGradient>
           </defs>
           <rect width="100" height="100" rx="18" fill="url(#g)" />
@@ -41,7 +41,7 @@ function submit() {
       </div>
 
       <p class="hero">
-        Bienvenido al sistema de gestión académica 🌌  
+        Bienvenido al sistema de gestión académica 📘  
         Ingresa tus credenciales para continuar.
       </p>
 
@@ -96,7 +96,7 @@ function submit() {
 
         <!-- Enlace a registro -->
         <p class="mt-4 text-center text-sm text-gray-300">
-          ¿No tienes cuenta? 
+          ¿No tienes cuenta?
           <Link href="/register" class="text-indigo-400 hover:underline">
             Regístrate aquí
           </Link>
@@ -107,16 +107,15 @@ function submit() {
 </template>
 
 <style>
-/* Aquí mantenemos todo tu CSS tal cual, incluyendo estilos de fondo, contenedores, inputs, botones, etc. */
 :root {
-  --primary: #003366;   /* Azul SENATI institucional */
-  --secondary: #2563eb; /* Azul moderno y brillante */
-  --accent: #f97316;    /* Naranja enérgico para hover */
+  --primary: #002855;   /* Azul presidencial SENATI */
+  --secondary: #1e3a8a; /* Azul oscuro moderno */
+  --accent: #2563eb;    /* Azul brillante para detalles */
   --neutral: #e5e7eb;
   --text: #1e293b;
   --white: #ffffff;
   --card: rgba(255, 255, 255, 0.15);
-  --radius: 14px;
+  --radius: 24px;
   --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   font-family: 'Inter', system-ui, sans-serif;
 }
@@ -128,23 +127,7 @@ html, body {
   padding: 0;
 }
 
-body {
-  background: linear-gradient(-45deg, var(--primary), var(--secondary), #1e3a8a, #1e40af);
-  background-size: 400% 400%;
-  animation: gradientShift 14s ease infinite;
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
-@keyframes gradientShift {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+/* Ya no incluimos fondo ni animación, lo toma del app.css */
 
 .container {
   width: 100%;
@@ -312,4 +295,3 @@ label {
 }
 
 </style>
-

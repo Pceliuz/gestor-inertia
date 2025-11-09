@@ -1,3 +1,41 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* === Fondo global animado para todo el proyecto === */
+
+:root {
+  --primary: #003366;   /* Azul SENATI institucional */
+  --secondary: #2563eb; /* Azul moderno brillante */
+  --tertiary: #1e3a8a;  /* Azul profundo */
+  --accent: #1e40af;    /* Azul oscuro */
+}
+
+html, body {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+/* Fondo animado global */
+body {
+  background: linear-gradient(-45deg, var(--primary), var(--secondary), var(--tertiary), var(--accent));
+  background-size: 400% 400%;
+  animation: gradientShift 14s ease infinite;
+  min-height: 100vh;
+  color: white;
+}
+
+/* Animación del fondo */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Suavizado global */
+* {
+  transition: all 0.25s ease;
+}

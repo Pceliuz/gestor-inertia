@@ -22,14 +22,17 @@ use App\Http\Controllers\EstudianteController;
 Route::get('/', function () {
     if (auth()->check()) {
         $user = auth()->user();
+
         if ($user->role === 'profesor') {
-            return redirect()->route('dashboard.profesor');
+            return redirect()->route('estudiantes.index');
         } else {
-            return redirect()->route('dashboard.estudiante');
+            return redirect()->route('estudiantes.create');
         }
     }
+
     return redirect()->route('login');
 });
+
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +43,7 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     // Página principal post-login (usa el controlador WelcomeController)
-    //Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
+    Route::get('/welcome', [WelcomeController::class, 'index'])->name('welcome');
 
     // 🔹 Grupo de rutas para estudiantes
     Route::prefix('estudiantes')->name('estudiantes.')->group(function () {
@@ -77,11 +80,10 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Rutas protegidas por autenticación
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard-profesor', [ProfesorController::class, 'index'])
-        ->name('dashboard.profesor');
-
-    Route::get('/dashboard-estudiante', [EstudianteController::class, 'index'])
-        ->name('dashboard.estudiante');
+    Route::prefix('estudiantes')->name('estudiantes.')->group(function () {
+        Route::get('/', [EstudiantesController::class, 'index'])->name('index');
+        Route::get('/create', [EstudiantesController::class, 'create'])->name('create');
+    });
 });
 
 
